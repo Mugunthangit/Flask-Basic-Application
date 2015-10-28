@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2> Website Main Page </h2>
+
+{% if g.user.is_authenticated()%}
+
+<div class="control-group">
+    <div class="controls">
+      <a href="/resetpassword"><button type="submit" class="btn btn-success">Reset Password</button></a>
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}

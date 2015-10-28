@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if not g.user.is_authenticated()%}
+
+  <form action="" method=post class="form-horizontal">
+    <h2>Signin to FlaskLogin Application </h2>
+    <div class="control-group">
+        <div class="controls">
+          <input type="text" id="username" name="username" class="input-xlarge"
+            placeholder="Enter Username" '''required  autocomplete="off"'''>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+          <input type="password" id="password" name="password" class="input-xlarge"
+            placeholder="Enter Password" '''required autocomplete="off"'''>
+        </div>
+    </div>
+
+     <div class="control-group">
+        <div class="controls">
+          <input type="checkbox" id="remember_me" name="remember me" class="checkboxclass"> &nbsp; <label class="labelclass" for="remember_me">Remember Me</label>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+          <button type="submit" class="btn btn-success">Signin</button>
+        </div>
+    </div>
+  </form>
+
+  {% endif %}
+
+{% endblock %}
