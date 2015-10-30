@@ -4,10 +4,20 @@
 {% if g.user.is_authenticated()%}
 
 <h1>Show User Details</h1>
-<p>
-        <strong>Name:</strong> {{ g.user.username }}<br />
-        <strong>Email:</strong>  {{  g.user.email }}
-</p>
+
+<table style="width:20%"  >
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+  </tr>
+  <tr align = "right" >
+    <td>{{ g.user.username }}</td>
+    <td>{{  g.user.email }}</td>
+  </tr>
+</table>
+<br>
+<br>
+
 <INPUT TYPE="button" VALUE="Back" class="btn btn-success" onClick="history.go(-1);">
 
 {% endif %}
