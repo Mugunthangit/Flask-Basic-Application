@@ -7,9 +7,12 @@ class EditForm(Form):
     password = StringField('password', validators=[DataRequired()])
     Retype_password = StringField('Retype_password', validators=[Length(min=0, max=140)])
 
+class Update(Form):
+    username = StringField('username', validators=[DataRequired()])
+    email = StringField('email',validators=[DataRequired()])
 
 class RegisterForm(Form):
-        username = StringField('username', validators=[DataRequired()])
-        password = StringField('password', validators=[DataRequired()])
-        Retype_password = StringField('Retype_password', validators=[DataRequired()])
-        email = StringField('email',validators=[DataRequired()])
+    username = StringField('username', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired()])
+    Retype_password = StringField('Retype_password', validators=[DataRequired()])
+    email = StringField('email',validators=[DataRequired()])

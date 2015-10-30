@@ -8,8 +8,7 @@ from flask.ext.login import login_user , logout_user , current_user , login_requ
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import validators, ValidationError
 from flask_wtf import Form
-from form import EditForm, RegisterForm
-
+from form import EditForm, RegisterForm, Update
 app = Flask(__name__)
 db = SQLAlchemy(app)
 app.secret_key = 'secret_key'
@@ -49,7 +48,6 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % (self.username)
 
-
 @app.route('/')
 def main():
     return render_template('main.html')
@@ -70,8 +68,24 @@ def register():
         db.session.commit()
         flash('User successfully registered')
         return redirect(url_for('login'))
+    else:
+        flash('Passwords are not same..')
+        return redirect(url_for('register'))
 
-@app.route('/login',methods=['GET','POST'])
+@login_required
+@app.route('/update', methods=['GET','POST'])
+def update():
+    form = Update()
+    if request.method == 'POST':
+        g.user = User.query.get(session['user_id'])
+        g.user.username = request.form['username']
+        g.user.email = request.form['email']
+        db.session.add(g.user)
+        db.session.commit()
+        flash('User Details updated')
+    return render_template('update.html')
+
+@app.route('/login', methods=['GET','POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -92,7 +106,7 @@ def login():
 
     login_user(registered_user, remember = remember_me)
     flash('Logged in successfully')
-    return redirect(request.args.get('next') or url_for('view'))
+    return redirect(url_for('view'))
 
 @app.route('/logout')
 def logout():
@@ -110,11 +124,10 @@ def resetpassword():
     form = EditForm()
     if request.method == 'POST':
         g.user = User.query.get(session['user_id'])
-
-        if form.password.data == form.Retype_password.data:
-            #g.user.password = form.password.data
+        if form.password.data == '':
+            flash('invalid password')
+        elif form.password.data == form.Retype_password.data:
             g.user.set_password(form.password.data)
-            #g.user.Retype_password = form.Retype_password.data
             db.session.add(g.user)
             db.session.commit()
             flash('User password updated')
@@ -124,10 +137,11 @@ def resetpassword():
 
 @app.before_request
 def before_request():
+    print session
     if 'user_id' in session:
-        session['user_id']
+        print session['user_id']
         g.user = User.query.get(session['user_id'])
-
+    print current_user.is_authenticated
     g.user = current_user
 
 if __name__ == '__main__':

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>Update User Details</h1>
+
+<form action="" method="POST" >
+
+  <div class="control-group">
+      <div class="controls">
+        <input type="string" id="username" name="username" class="input-xlarge"
+          placeholder="User Name">
+      </div>
+  </div>
+
+  <div class="control-group">
+      <div class="controls">
+        <input type="email" id="email" name="email" class="input-xlarge"
+          placeholder="Email">
+      </div>
+  </div>
+
+  <div class="control-group">
+      <div class="controls">
+        <a href="/view"><button type="update" class="btn btn-success">Change</button></a>
+      </div>
+  </div>
+
+</form>
+
+{% endblock %}
