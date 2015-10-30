@@ -132,16 +132,26 @@ def resetpassword():
             db.session.commit()
             flash('User password updated')
         else:
-            flash('Check you password.')
+            flash('Check your password.')
     return render_template('resetpassword.html', form=form )
+
+@login_required
+@app.route('/show')
+def show():
+    if request.method == 'POST':
+        g.user = User.query.get(session['user_id'])
+        for username, email in g.user:
+            username = request.form['username']
+            email = request.form['email']
+    return render_template('show.html')
 
 @app.before_request
 def before_request():
     print session
     if 'user_id' in session:
-        print session['user_id']
+        #print session['user_id']
         g.user = User.query.get(session['user_id'])
-    print current_user.is_authenticated
+    #print current_user.is_authenticated
     g.user = current_user
 
 if __name__ == '__main__':

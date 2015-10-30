@@ -1,22 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
 
+{% if g.user.is_authenticated()%}
+
 <h1>Show User Details</h1>
+<p>
+        <strong>Name:</strong> {{ g.user.username }}<br />
+        <strong>Email:</strong>  {{  g.user.email }}
+</p>
+<INPUT TYPE="button" VALUE="Back" class="btn btn-success" onClick="history.go(-1);">
 
-  <div class="control-group">
-      <div class="controls">
-        <input type="string" id="username" name="username" class="input-xlarge"
-          placeholder="User Name">
-      </div>
-  </div>
-
-  <div class="control-group">
-      <div class="controls">
-        <input type="email" id="email" name="email" class="input-xlarge"
-          placeholder="Email">
-      </div>
-  </div>
-
-
+{% endif %}
 
 {% endblock %}
